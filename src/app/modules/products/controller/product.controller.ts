@@ -22,6 +22,25 @@ const createProduct = async (req: Request, res: Response) => {
   }
 }
 
+const createManyProducts = async (req: Request, res: Response) => {
+  try {
+    const parseData = ProductValidationSchema.array().parse(req.body)
+    const result = await ProductService.createManyProducts(parseData)
+    res.status(201).json({
+      success: true,
+      message: "Products created successfully",
+      data: result
+    })
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || "Something went wrong",
+      error: err
+    })
+  }
+}
+
 export const ProductController = {
-  createProduct
+  createProduct,
+  createManyProducts
 }

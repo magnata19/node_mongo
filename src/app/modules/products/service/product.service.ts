@@ -6,6 +6,12 @@ const createProduct = async (data: TProduct) => {
   return result;
 }
 
+const createManyProducts = async (data: TProduct[]) => {
+  const result = await Product.insertMany(data)
+  return result;
+}
+
 export const ProductService = {
-  createProduct
+  createProduct,
+  createManyProducts
 }
