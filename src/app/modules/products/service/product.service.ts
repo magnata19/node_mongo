@@ -22,9 +22,21 @@ const getProductById = async (productId: string) => {
   return result;
 }
 
+const updateProduct = async (productId: string, data: Partial<TProduct>) => {
+  const result = await Product.findByIdAndUpdate(productId, data, { new: true });
+  return result;
+}
+
+const deleteProduct = async (productId: string) => {
+  const result = await Product.findByIdAndDelete(productId);
+  return result;
+}
+
 export const ProductService = {
   createProduct,
   createManyProducts,
+  updateProduct,
   getAllProducts,
-  getProductById
+  getProductById,
+  deleteProduct
 }
