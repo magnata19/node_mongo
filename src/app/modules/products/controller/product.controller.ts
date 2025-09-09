@@ -9,8 +9,7 @@ const createProduct = async (req: Request, res: Response) => {
     const result = await ProductService.createProduct(parseData);
     res.status(201).json({
       success: true,
-      message: "Product created successfully",
-      data: result
+      message: "Product created successfully"
     })
   } catch (err: any) {
     res.status(500).json({
