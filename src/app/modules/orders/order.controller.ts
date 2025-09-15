@@ -18,6 +18,13 @@ const createOrder = async (req: Request, res: Response) => {
 
     if (parsedBody.success) {
       const product = await Product.findById(parsedBody.data.productId);
+      if(!product) {
+        return res.status(404).json({
+          success: false,
+          message: "Product not found."
+        })
+      }
+
       if (product && product.inventory.quantity < parsedBody.data.quantity) {
         return res.status(400).json({
           success: false,
@@ -45,6 +52,33 @@ const createOrder = async (req: Request, res: Response) => {
   }
 }
 
+const handleOrderByEmail = async (req: Request, res: Response) => {
+  try {
+    const email = req.query.email;
+    const orders = await OrderService.handleOrderByEmail(email as string | undefined)
+    if(orders.length == 0) {
+        return res.status(400).json({
+        success: false,
+        message: "No orders found for this email.",
+        data: []
+      })
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Orders fetched succesffully",
+      data: orders
+    })
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err
+    })
+  }
+}
+
 export const OrderController = {
-  createOrder
+  createOrder,
+  handleOrderByEmail
 }
