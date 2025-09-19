@@ -8,7 +8,7 @@ const registerUser = async (req: Request, res: Response) => {
   try {
     const userExisted = await UserService.findUserByEmail(email);
     if(userExisted) {
-      res.status(400).json({
+      res.status(409).json({
         message: "User already exists."
       })
       return

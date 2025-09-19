@@ -8,14 +8,14 @@ export type TCreateUserParams = {
   role: string
 }
 
-const findUserByEmail = (email: string) => {
-  return User.findOne({email});
+const findUserByEmail = async(email: string): Promise<TUser | null> => {
+  return await User.findOne({email});
 }
 
-const createUser = (user: TCreateUserParams): Promise<TUser> => {
+const createUser = async (user: TCreateUserParams): Promise<TUser> => {
   const hashedPassword = bcryptjs.hashSync(user.password, 10);
   user.password = hashedPassword;
-  return User.create(user);
+  return await User.create(user);
 }
 
 const validatePassword = (inputPassword: string, password: string): boolean => {
