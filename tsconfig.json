@@ -36,5 +36,6 @@
     "moduleDetection": "force",
     "resolveJsonModule": true, // allows import of json files
     "skipLibCheck": true,
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }
