@@ -22,8 +22,13 @@ const validatePassword = (inputPassword: string, password: string): boolean => {
   return bcryptjs.compareSync(inputPassword, password)
 }
 
+const getUsers = async (): Promise<TUser[]> => {
+  return await User.find();
+}
+
 export const UserService = {
   findUserByEmail,
   createUser,
+  getUsers,
   validatePassword
 }

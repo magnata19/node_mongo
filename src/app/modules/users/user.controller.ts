@@ -35,6 +35,7 @@ const signIn = async (req: Request, res: Response) => {
       res.status(404).json({
         message: "Invalid email or password."
       })
+      return;
     }
 
     const isPasswordValid = UserService.validatePassword(password, user!.password);
@@ -42,6 +43,7 @@ const signIn = async (req: Request, res: Response) => {
       res.status(404).json({
         message: "Password is incorrect."
       })
+      return;
     }
 
     const token = sign({
@@ -62,7 +64,15 @@ const signIn = async (req: Request, res: Response) => {
   }
 }
 
+const getUsers = async (req: Request, res: Response) => {
+  const users = await UserService.getUsers();
+  res.status(200).json({
+    users
+  })
+}
+
 export const UserController = {
   registerUser,
-  signIn
+  signIn,
+  getUsers
 }
