@@ -33,7 +33,8 @@ const signIn = async (req: Request, res: Response) => {
     const user = await UserService.findUserByEmail(email);
     if(!user) {
       res.status(404).json({
-        message: "Invalid email or password."
+        success: false,
+        message: "Email ou senha inválidos."
       })
       return;
     }
@@ -41,7 +42,8 @@ const signIn = async (req: Request, res: Response) => {
     const isPasswordValid = UserService.validatePassword(password, user!.password);
     if(!isPasswordValid) {
       res.status(404).json({
-        message: "Password is incorrect."
+        success: false,
+        message: "Senha incorreta."
       })
       return;
     }
@@ -53,11 +55,13 @@ const signIn = async (req: Request, res: Response) => {
       })
 
       res.status(200).json({
+        success: true,
         message: "Login successfully.",
         token: token
       })
   } catch (err: any) {
     res.status(500).json({
+      success: false,
       message: "Login failed, try again.",
       error: err
     })
